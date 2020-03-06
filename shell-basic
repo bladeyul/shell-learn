@@ -1,0 +1,155 @@
+shell脚本学习
+	变量
+		$引用
+		${引用}
+	vi方向键乱码
+		/etc/virc 
+			set nocompatible
+			et backspace=2
+	参数
+		$*连续几个参数都合成一个参数了
+		$@该几个还是几个
+	数组
+		array=(1,2)
+		获取元素${array[index]}
+		获取所有元素${array[*]}
+		获取所有元素${array[@]}
+	运算符
+		expr运算符
+			`expr 2 + 2` 空格,反引号
+		关系
+			if [ $a -eq $b ] 空格
+		布尔
+			if [ $a != $b ] 空格
+		逻辑
+			if [[ $a -lt 10 && $b -gt 100 ]] 空格,两个中括号
+		字符串运算
+			if [ $a = $b ]
+		文件测试可读
+			if [ -r $file ]
+	echo
+		echo "a"
+		echo "\"a"
+		echo -e "Ok \n"
+		echo -e "name \c"
+		echo '\"'	不转义,单引号
+		echo `date`		执行结果,反引号
+	printf
+		printf  format-string  [arguments...]
+		printf "%-10s %-8s %-4s\n" Name Sex Weight-kg  -左对齐,没有右对齐,10为宽度
+	test
+		test $[a+b] -eq $[b]	中括号执行算数运算,不允许有空格
+			eq/ne/gt/ge/lt/le
+		test $a = $b
+			=/!=/-z/-n 			-z字符串长度为0,-n不为0,空格,无中括号
+		test -e ./bash
+			e/r/w/x/s/d/f/c/b   -e存在,r可读,w可写,x可执行,s有字符,d目录,f普通文件,c字符型特殊文件,b块特殊文件
+
+		逻辑运算
+		test -e ./bash -o -e ./bashrc 
+			o/!/a 				!非,-a与,-o或
+
+	if控制流程
+		if cond
+		then
+			command1
+		elif cond2
+		then
+			command2
+		else
+			command3
+		fi
+
+	for 循环流程
+		for var in item1 item2
+		do 
+			command1
+		done
+
+	while 循环流程
+		while cond
+		do
+			command
+		done
+
+		while (( $int<=5 ))		注意空格
+		do
+			echo $int
+			let "int++"			let运行表达式，不要加$
+		done
+
+		while read FILM			获取输入
+		do
+			echo $FILM
+		done
+
+	无限循环
+		while ：					注意冒号
+		do
+			command
+		done
+
+		while True
+		do
+			command
+		done
+
+		for (( ; ; ))			注意空格
+
+	until循环
+		until cond
+		do
+			command
+		done					必定循环一次
+
+	case控制流
+		case $a in 				in
+		b)						括号
+			command1
+			;;					两个分号表示break
+		c)
+			command2
+			;;
+		*)						*号匹配
+			command3
+			;;
+		esac
+	流程变化
+		break
+		continue
+	函数
+		[function] funcname [()]		可以使用function,也可以不用
+		{
+			action;
+			[return int;]				没有return，则返回最后一条命令的结果值
+		}
+
+		函数要在脚本的前面
+		$?								调用最近一次调用的函数的值
+
+		参数
+			函数内使用${n}获取，n小于10可以简化$n
+			$和特殊字符组合 #/*/$/!/@/-/？	#参数个数，*参数变成字符串，$进程ID
+											！后台运行的最后一个进程的ID，@加引号的参数字符串
+											- 显示shell的当前选项 ？最后命令的退出状态
+	重定向
+		>		输出
+		<		输入
+		>>		输出添加爱
+		>&		输出文件合并
+		<& 		输入文件合并
+		<<	tag 标记文件之间的内容输入
+		0		stdin
+		1		stdout
+		2		stderr
+
+		command > file 2>&1	标准输出和标准错误合并后输出
+		command > /dev/null	2>&1	毫无输出
+
+	文件引入和包含
+		. filename				.符号，空格
+		source filename
+
+	let
+		let arg arg 		执行表达式
+		let a++ a-- a+=1 a-=1

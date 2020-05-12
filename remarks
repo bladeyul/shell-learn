@@ -1,0 +1,16 @@
+执行顺序
+交互式shell
+	/etc/profile
+	按顺序三选最早
+	~/.bash_profile
+	~/.bash_login
+	~/.profile
+
+交互式非登录shell
+	/etc/bash.bashrc
+	~/.bashrc
+  
+非交互非登录
+	执行环境变量BASH_ENV指定的文件
+  
+
